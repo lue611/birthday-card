@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>xhs design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#fffaf0;--ink:#372942;--plum:#5e365f;--coral:#e97972;--gold:#d4a14c}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#555;font-family:"Noto Serif SC",serif;color:var(--ink)}
+.canvas{width:1080px;height:1440px;position:relative;overflow:hidden;margin:40px auto}
+.night{background:radial-gradient(circle at 9% 10%,#735173 0,transparent 27%),radial-gradient(circle at 90% 22%,#334e6e 0,transparent 28%),linear-gradient(145deg,#28203b,#1e1b31)}
+.night:before{content:"";position:absolute;inset:0;opacity:.4;background-image:radial-gradient(#fff 1px,transparent 1.5px),radial-gradient(#fff 1px,transparent 1.5px);background-size:44px 44px,79px 79px;background-position:0 0,20px 11px}
+.paperbg{background:var(--paper)}
+.paperbg:before{content:"";position:absolute;inset:0;opacity:.5;background:repeating-linear-gradient(0deg,transparent 0 39px,rgba(93,63,81,.06) 40px)}
+.canvas>*{position:relative}
+.hand{font-family:"Ma Shan Zheng",cursive;font-weight:400}
+.serif-en{font-family:"DM Serif Display",serif}
+img{display:block}
+.shot{border-radius:18px;box-shadow:0 22px 50px rgba(30,15,40,.35);background:#fff;overflow:hidden}
+.shot img{width:100%;height:100%;object-fit:cover}
+/* ---------- C1 cover ---------- */
+#c1{padding:88px 80px;text-align:center;color:#f8eefa}
+#c1 .kicker{letter-spacing:.42em;font-size:30px;opacity:.85}
+#c1 h1{font-size:118px;font-weight:900;line-height:1.28;margin-top:34px;color:#fff}
+#c1 h1 em{font-style:normal;color:var(--gold)}
+#c1 .sub{font-size:72px;color:#ffd9d4;margin-top:18px}
+#c1 .env{width:760px;margin:56px auto 0;filter:drop-shadow(0 40px 60px rgba(0,0,0,.5))}
+#c1 .chips{display:flex;gap:22px;justify-content:center;margin-top:64px}
+#c1 .chips span{border:1px solid rgba(255,255,255,.4);background:rgba(255,255,255,.08);border-radius:999px;padding:16px 34px;font-size:31px;letter-spacing:.06em}
+#c1 .badge{position:absolute;top:66px;right:64px;width:190px;height:190px;border-radius:50%;background:var(--coral);color:#fff5ee;display:grid;place-items:center;transform:rotate(12deg);box-shadow:0 10px 30px rgba(0,0,0,.35);font-size:40px;line-height:1.35;font-weight:700;border:4px dashed rgba(255,255,255,.65)}
+/* ---------- C2 flow ---------- */
+#c2{padding:64px 56px}
+#c2 h2,#c3 h2,#c4 h2,#c5 h2{text-align:center;font-size:66px;font-weight:900}
+#c2 h2{font-size:58px}
+#c2 .lede{text-align:center;font-size:28px;color:#8d6e68;margin-top:10px;letter-spacing:.08em}
+#c2 .grid{display:grid;grid-template-columns:1fr 1fr;gap:30px 26px;margin-top:40px}
+#c2 .step{background:#fff;border-radius:22px;padding:20px 20px 24px;box-shadow:0 16px 34px rgba(88,42,55,.14)}
+#c2 .step .shot{height:400px;border-radius:14px}
+#c2 .step p{margin-top:16px;font-size:28px;line-height:1.45}
+#c2 .step b{display:inline-grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--plum);color:#fff;font-size:24px;margin-right:12px;vertical-align:middle;font-family:"DM Serif Display",serif}
+/* ---------- C3 custom ---------- */
+#c3{padding:96px 90px;color:#f6eefa}
+#c3 h2{color:#fff}
+#c3 .lede{text-align:center;font-size:31px;opacity:.8;margin-top:14px;letter-spacing:.1em}
+#c3 .list{margin-top:64px;display:grid;grid-template-columns:1fr 1fr;gap:30px 34px}
+#c3 .item{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.18);border-radius:18px;padding:30px 30px;font-size:33px;line-height:1.5}
+#c3 .item i{font-style:normal;color:var(--gold);margin-right:14px}
+#c3 .item small{display:block;font-size:25px;opacity:.65;margin-top:8px}
+#c3 .cd{width:600px;margin:70px auto 0}
+#c3 .cd .cap{text-align:center;font-size:30px;margin-top:26px;color:#ffd9d4}
+/* ---------- C4 scenes ---------- */
+#c4{padding:96px 84px}
+#c4 .lede{text-align:center;font-size:31px;color:#8d6e68;margin-top:14px}
+#c4 .cards{display:grid;grid-template-columns:1fr 1fr;gap:38px;margin-top:64px}
+#c4 .card{border-radius:22px;padding:44px 40px;min-height:330px;background:#fff;box-shadow:0 16px 34px rgba(88,42,55,.12);border-top:8px solid var(--coral)}
+#c4 .card:nth-child(2){border-top-color:var(--gold)}
+#c4 .card:nth-child(3){border-top-color:#6e7db7}
+#c4 .card:nth-child(4){border-top-color:#8a5c85}
+#c4 .card .em{font-size:66px}
+#c4 .card h3{font-size:44px;margin:20px 0 16px;font-weight:900;color:var(--plum)}
+#c4 .card p{font-size:31px;line-height:1.7;color:#6d5560}
+#c4 .foot{margin-top:52px;text-align:center;font-size:29px;color:#9d7a65}
+/* ---------- C5 order ---------- */
+#c5{padding:80px 90px;color:#f6eefa}
+#c5 h2{color:#fff;font-size:60px}
+#c5 .steps{margin-top:44px;display:grid;gap:26px}
+#c5 .st{display:flex;gap:28px;align-items:flex-start;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.18);border-radius:20px;padding:26px 32px}
+#c5 .st b{flex:none;width:58px;height:58px;border-radius:50%;background:var(--coral);color:#fff;display:grid;place-items:center;font-size:30px;font-family:"DM Serif Display",serif}
+#c5 .st h3{font-size:34px;margin-bottom:8px;color:#fff}
+#c5 .st p{font-size:27px;line-height:1.6;opacity:.82}
+#c5 .faq{margin-top:42px;border-top:1px dashed rgba(255,255,255,.3);padding-top:32px}
+#c5 .faq h4{font-size:30px;color:var(--gold);letter-spacing:.15em;margin-bottom:20px}
+#c5 .faq ul{list-style:none;font-size:27px;line-height:1.95;opacity:.88}
+#c5 .faq li:before{content:"✦ ";color:var(--coral)}
+#c5 .cta{margin-top:40px;text-align:center}
+#c5 .cta .big{display:inline-block;background:var(--gold);color:#241a2e;font-size:36px;font-weight:900;padding:22px 52px;border-radius:999px;box-shadow:0 14px 34px rgba(0,0,0,.4)}
+#c5 .cta .small{margin-top:18px;font-size:26px;opacity:.7}
+</style>
+</head>
+<body>
+
+<!-- C1 封面 -->
+<section class="canvas night" id="c1">
+  <div class="badge">首批<br>体验价</div>
+  <p class="kicker">数字生日信 · 可定制</p>
+  <h1>朋友生日<br>别再只发<em>红包</em>了</h1>
+  <p class="sub hand">寄一封「能打开」的信吧</p>
+  <img class="env" src="shots/envelope_closed.png" alt="envelope">
+  <div class="chips"><span>轻触信封</span><span>信纸展开</span><span>撒花祝福</span></div>
+</section>
+
+<!-- C2 体验流程 -->
+<section class="canvas paperbg" id="c2">
+  <h2>TA 点开链接后，会经历什么？</h2>
+  <p class="lede">一条链接 = 一次完整的拆礼物过程</p>
+  <div class="grid">
+    <div class="step"><div class="shot"><img src="shots/opening_full.png" style="object-position:top"></div>
+      <p><b>1</b>先看到一只封好的信封，上面写着 TA 的名字</p></div>
+    <div class="step"><div class="shot"><img src="shots/letter_top.png" style="object-position:top"></div>
+      <p><b>2</b>轻轻一触，信纸展开，彩带和撒花落下来</p></div>
+    <div class="step"><div class="shot" style="display:grid;place-items:center;background:#fdf3ea"><img src="shots/photo_card.png" style="object-fit:contain;height:360px;width:auto"></div>
+      <p><b>3</b>你的信、你们的照片、还有背景音乐</p></div>
+    <div class="step"><div class="shot" style="display:grid;place-items:center;gap:26px;background:#fdf3ea;padding:30px">
+      <img src="shots/wish_wheel.png" style="width:96%;object-fit:contain;height:auto"><img src="shots/music_btn.png" style="width:56%;object-fit:contain;height:auto"></div>
+      <p><b>4</b>祝福可以一句一句换，每一句都是你写的</p></div>
+  </div>
+</section>
+
+<!-- C3 可定制 -->
+<section class="canvas night" id="c3">
+  <h2>每一封，都按你们的故事定制</h2>
+  <p class="lede">你把素材给我，剩下的我来排版制作</p>
+  <div class="list">
+    <div class="item"><i>✦</i>称呼与署名<small>收件人名字 + 送礼人落款</small></div>
+    <div class="item"><i>✦</i>一封专属生日信<small>你写原文，我帮你排版润色</small></div>
+    <div class="item"><i>✦</i>多条可切换祝福<small>轻点 ↻ 换一句，越点越惊喜</small></div>
+    <div class="item"><i>✦</i>回忆照片 + 配文<small>把你们的瞬间做成拍立得</small></div>
+    <div class="item"><i>✦</i>背景音乐<small>点开就放 TA 熟悉的那首歌</small></div>
+    <div class="item"><i>✦</i>定时开启<small>生日当天 00:00 才准打开</small></div>
+  </div>
+  <div class="cd"><div class="shot" style="border-radius:22px"><img src="shots/countdown_box.png" style="object-fit:contain;background:transparent"></div>
+  <p class="cap">还没到日子？它会先倒计时，替你把期待养好</p></div>
+</section>
+
+<!-- C4 适合场景 -->
+<section class="canvas paperbg" id="c4">
+  <h2>这封信，特别适合这些人</h2>
+  <p class="lede">不撞款、不翻车、不用挑物流</p>
+  <div class="cards">
+    <div class="card"><div class="em">🌙</div><h3>异地恋的 TA</h3><p>人没法到场，零点的第一份仪式感可以准时到。</p></div>
+    <div class="card"><div class="em">👭</div><h3>闺蜜 / 最好的朋友</h3><p>红包会被忘记，但这封信 TA 会点开很多遍。</p></div>
+    <div class="card"><div class="em">🙈</div><h3>嘴笨 / 社恐选手</h3><p>说不出口的真心话，让它替你认认真真说完。</p></div>
+    <div class="card"><div class="em">📷</div><h3>回忆收藏家</h3><p>照片、想说的话、那首歌，从此住在同一个链接里。</p></div>
+  </div>
+  <p class="foot">纪念日、表白、道歉、毕业季……想送别的节点，也可以来聊</p>
+</section>
+
+<!-- C5 下单与交付 -->
+<section class="canvas night" id="c5">
+  <h2>怎么订？三步就好</h2>
+  <div class="steps">
+    <div class="st"><b>1</b><div><h3>私信我</h3><p>告诉我想送给谁、什么场景、希望什么时候交付</p></div></div>
+    <div class="st"><b>2</b><div><h3>交素材</h3><p>名字、信、照片、想放的歌；不会写也没关系，我帮你顺句子</p></div></div>
+    <div class="st"><b>3</b><div><h3>验收交付</h3><p>确认满意后，收到一个专属链接——发给 TA 就能打开</p></div></div>
+  </div>
+  <div class="faq">
+    <h4>下单前你可能想问</h4>
+    <ul>
+      <li>虚拟定制商品，没有实物快递哦</li>
+      <li>一般 1–3 天交付，急单提前说</li>
+      <li>链接长期有效，可以一直回来看</li>
+      <li>首批体验价，档期有限，做一单少一单</li>
+    </ul>
+  </div>
+  <div class="cta"><span class="big">评论区留「生日信」</span><p class="small">或者直接私信我，先聊需求再决定做不做：）</p></div>
+</section>
+
+</body>
+</html>
