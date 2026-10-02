@@ -1,19 +1,47 @@
-# 可定制数字生日祝福页
+# 信笺时刻：自助生成数字祝福信
 
-这是无需后端的静态单页模板，可直接部署到 GitHub Pages 或 Cloudflare Pages。
+静态前端部署在帽子云；订单、图片与专属链接由 Supabase 提供。
 
-## 为一位客户制作页面
+## 页面入口
 
-1. 复制 index.html。每个订单建议放入独立目录，例如 orders/随机订单号/index.html。
-2. 修改文件顶部的 CARD_CONFIG：收件人、署名、祝福语、开启时间、照片、音乐与基础口令。
-3. 将照片和音乐上传到对象存储，再填入其 HTTPS URL。不要把客户私密素材提交到公开 GitHub 仓库。
-4. 用手机浏览器测试页面后部署。
+- index.html：产品介绍页，适合小红书主页或置顶评论跳转。
+- create.html：模板选择和自助填写页。
+- card.html?id=订单 UUID：独立祝福信页面。
 
-## 部署
+当前可选模板：生日来信、写给妈妈、写给老师。新增模板时需同步更新：
 
-- GitHub Pages：仓库 Settings → Pages → 选择 main 分支根目录。
-- Cloudflare Pages：连接 GitHub 仓库；构建命令留空，输出目录填 /。
+1. assets/js/create.js 中的 templates。
+2. supabase/schema.sql 与 create-card 函数中的模板白名单。
+3. card.html 的实际展示逻辑（未来可为每种模板单独做视觉）。
 
-## 隐私提示
+## 首次配置 Supabase
 
-noindex 与 accessCode 只能降低误打开和搜索收录风险；口令在前端源码中可被找到，不能作为严格隐私保护。真正私密的照片或视频应使用私有对象存储、签名 URL，以及 Cloudflare Access / Workers 等服务端鉴权方案。
+1. 打开 Supabase Dashboard → SQL Editor。
+2. 将 supabase/schema.sql 的全部内容粘贴并执行一次。
+3. 安装 Supabase CLI，并在项目根目录登录、关联项目。
+4. 部署函数：
+
+   supabase functions deploy create-card --no-verify-jwt
+   supabase functions deploy get-card --no-verify-jwt
+
+5. Dashboard → Edge Functions，确认两个函数均为 Active。
+
+函数使用 Supabase 自带的 SUPABASE_URL 与 SUPABASE_SERVICE_ROLE_KEY 环境变量；不要把 service role key 写入网页、GitHub 或聊天消息。
+
+由于这是无需登录即可填写的公开产品页，函数需要允许匿名请求，因此使用了 --no-verify-jwt。上线后建议接入 Cloudflare Turnstile 或 Supabase Edge Function 限流，降低恶意批量提交的风险。
+
+## 部署到帽子云
+
+把整个项目部署为静态站点。小红书应挂：
+
+https://你的帽子云域名/create.html
+
+帽子云若使用单页重写规则，不需要配置；当前使用普通静态 HTML 文件。
+
+## 安全与隐私边界
+
+- 每张卡使用服务端生成的 UUID，订单数据储存在 Supabase，不会通过静态文件互相覆盖。
+- 图片按订单 UUID 存储在 card-media 桶中。
+- 当前图片桶为公开读取：随机 ID 降低猜测概率，但不能视为严格私密保护。
+- 不要上传高度敏感照片；严格私密版应后续改用私有桶和带时效的签名 URL。
+- publishable key 可放在前端；绝不能放入 service_role / secret key。
